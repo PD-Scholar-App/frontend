@@ -1,22 +1,3 @@
-var selectRow = null;
-
-function showAlert(message, className) {
-  const div = document.createElement("div");
-  div.className = "alert alert-${className}";
-
-  div.appendChild(document.createTextNode(message));
-  const container = document.querySelector(".container");
-  const main = document.querySelector(".main");
-  container.insertBefore(div, main);
-}
-
-function clearFields() {
-  document.querySelector("#nome").value = "";
-  document.querySelector("#anos").value = "";
-  document.querySelector("#coordenador").value = "";
-  document.querySelector("#tipo").value = "";
-}
-
 document.querySelector("#curso").addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -32,10 +13,70 @@ document.querySelector("#curso").addEventListener("submit", (e) => {
       text: "Preenche os campos",
     });
   } else {
-    if (selectRow == null) {
+    const isNomeValid = typeof nome === "string";
+    const isAnosValid = !isNaN(Number(anos));
+    const isCoordenadorValid = typeof coordenador === "string";
+    const isTipoValid = typeof tipo === "string";
+
+    if (!isNomeValid || !isAnosValid || !isCoordenadorValid || !isTipoValid) {
+      Swal.fire({
+        icon: "error",
+        title: "Erro no Formulário",
+        text: "Preencha os campos corretamente",
+      });
+    } else {
+      createCurso();
     }
   }
 });
+
+async function createCurso() {
+  const apiUrl = "http://127.0.0.1:8000/api/cursos";
+
+  let nome = document.querySelector("#nome").value;
+  let anos = Number(document.querySelector("#anos").value);
+  let coordenador = document.querySelector("#coordenador").value;
+  let tipo = document.querySelector("#tipo").value;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Add any additional headers if required
+      },
+      body: JSON.stringify({
+        nome: nome,
+        anos: anos,
+        coordenador: coordenador,
+        tipo: tipo,
+        disciplina: [],
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      populateTableCursos();
+      Swal.fire({
+        icon: "success",
+        title: "Criada",
+        text: "Disciplina criada com sucesso",
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        text: "Erro ao criar a disciplina",
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Erro",
+      text: "Erro ao criar a disciplina",
+    });
+  }
+}
 
 async function getCursos() {
   try {
@@ -63,7 +104,6 @@ async function populateTableCursos() {
   }
 
   cursos.forEach((curso) => {
-    console.log(curso);
     const row = document.createElement("tr");
     row.innerHTML = `
         <td>${curso.id}</td>

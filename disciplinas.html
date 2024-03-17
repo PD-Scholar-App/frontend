@@ -15,7 +15,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <title>CRUD Cursos</title>
+    <title>CRUD Disciplinas</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -50,7 +50,7 @@
           <h2 class="my-3">CRUD Disciplinas</h2>
           <form
             action=""
-            id="curso"
+            id="disciplina"
             class="row justify-content-center ms-3"
             autocomplete
           >
@@ -65,31 +65,22 @@
             </div>
 
             <div class="mb-3">
-              <label for="anos" class="form-label">Anos</label>
-              <input
-                type="number"
-                class="form-control"
-                id="anos"
-                placeholder="anos"
-              />
-            </div>
-
-            <div class="mb-3">
-              <label for="coordenador" class="form-label">Coordenador</label>
-              <input
-                type="text"
-                class="form-control"
-                id="coordenador"
-                placeholder="Coordenador"
-              />
-            </div>
-            <div class="mb-3">
               <label for="tipo" class="form-label">Tipo</label>
               <input
                 type="text"
                 class="form-control"
                 id="tipo"
                 placeholder="tipo"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="etcs" class="form-label">Etcs</label>
+              <input
+                type="text"
+                class="form-control"
+                id="etcs"
+                placeholder="etcs"
               />
             </div>
 
@@ -101,34 +92,21 @@
       </div>
       <div class="mt-5 row justify-content-center">
         <div class="col-12">
-          <table class="table" id="tabelaCursos">
+          <table class="table" id="tabelaDisciplinas">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
-                <th scope="col">Anos</th>
-                <th scope="col">Coordenador</th>
-                <th scope="col">Tipo</th>
+                <th scope="col">tipo</th>
+                <th scope="col">etcs</th>
                 <th scope="col">Ações</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- <tr>
-                <th scope="row">1</th>
-                <td>EI</td>
-                <td>3</td>
-                <td>Rui Costa</td>
-                <td>dificil</td>
-                <td>
-                  <a href="" class="btn btn-warning btn-sm edit">Editar</a>
-                  <a href="" class="btn btn-danger btn-sm delete">Apagar</a>
-                </td>
-              </tr> -->
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script src="disciplinas.js"></script>
   </body>
 </html>

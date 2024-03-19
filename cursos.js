@@ -5,8 +5,17 @@ document.querySelector("#curso").addEventListener("submit", (e) => {
   let anos = document.querySelector("#anos").value;
   let coordenador = document.querySelector("#coordenador").value;
   let tipo = document.querySelector("#tipo").value;
+  let disciplinas = $("#disciplinasSelect")
+    .select2("data")
+    .map((disciplina) => disciplina.id);
 
-  if (nome == "" || anos == "" || coordenador == "" || tipo == "") {
+  if (
+    nome == "" ||
+    anos == "" ||
+    coordenador == "" ||
+    tipo == "" ||
+    disciplinas == []
+  ) {
     Swal.fire({
       icon: "error",
       title: "Erro no Formulário",
@@ -17,8 +26,15 @@ document.querySelector("#curso").addEventListener("submit", (e) => {
     const isAnosValid = !isNaN(Number(anos));
     const isCoordenadorValid = typeof coordenador === "string";
     const isTipoValid = typeof tipo === "string";
+    const isDisciplinasValid = typeof disciplinas === "object";
 
-    if (!isNomeValid || !isAnosValid || !isCoordenadorValid || !isTipoValid) {
+    if (
+      !isNomeValid ||
+      !isAnosValid ||
+      !isCoordenadorValid ||
+      !isTipoValid ||
+      !isDisciplinasValid
+    ) {
       Swal.fire({
         icon: "error",
         title: "Erro no Formulário",
@@ -37,6 +53,9 @@ async function createCurso() {
   let anos = Number(document.querySelector("#anos").value);
   let coordenador = document.querySelector("#coordenador").value;
   let tipo = document.querySelector("#tipo").value;
+  let disciplinas = $("#disciplinasSelect")
+    .select2("data")
+    .map((disciplina) => disciplina.id);
 
   try {
     const response = await fetch(apiUrl, {
@@ -50,7 +69,7 @@ async function createCurso() {
         anos: anos,
         coordenador: coordenador,
         tipo: tipo,
-        disciplina: [],
+        disciplina: disciplinas,
       }),
     });
 
@@ -122,3 +141,24 @@ async function populateTableCursos() {
 
 // Populate the table when the page loads
 document.addEventListener("DOMContentLoaded", populateTableCursos);
+
+function populateSelect() {
+  fetch("http://127.0.0.1:8000/api/disciplinas")
+    .then((response) => response.json())
+    .then((data) => {
+      const selectElement = document.getElementById("disciplinasSelect");
+      selectElement.innerHTML = "";
+
+      data.forEach((item) => {
+        const option = document.createElement("option");
+        option.textContent = item.nome;
+        option.value = item.id;
+        selectElement.appendChild(option);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", populateSelect);

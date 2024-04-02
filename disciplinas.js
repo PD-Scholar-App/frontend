@@ -1,9 +1,3 @@
-function clearFields() {
-    document.querySelector("#nome").value = "";
-    document.querySelector("#tipo").value = "";
-    document.querySelector("#etcs").value = "";
-}
-
 async function createDisciplina() {
     const apiUrl = "http://127.0.0.1:8000/api/disciplinas";
 
@@ -172,7 +166,6 @@ document.addEventListener("click", function (event) {
 
 
 async function deleteDisciplina(disciplinaId) {
-    console.log('entrei');
     const apiUrl = `http://127.0.0.1:8000/api/disciplinas/${disciplinaId}`;
 
     try {

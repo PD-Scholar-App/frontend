@@ -1,10 +1,5 @@
 pipeline {
     agent any
-    
-    environment {
-        branchName = Version.tokenize('/').last() //'refs/heads/main'
-    }
-
 
     stages {
         stage('Preparation') {
@@ -29,7 +24,7 @@ pipeline {
             steps {
                 script {
                         sh '''
-                        image_name="a2022113664/schoolar-frontend:$branchName"
+                        image_name="a2022113664/schoolar-frontend:latest"
                         
                         docker build -t $image_name -f Dockerfile .
                         docker push $image_name

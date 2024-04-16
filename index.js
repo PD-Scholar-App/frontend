@@ -1,6 +1,6 @@
 async function getCursos() {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/cursos");
+    const response = await fetch("http://backend:8000/api/cursos");
 
     if (!response.ok) {
       throw new Error("Failed to fetch cursos");

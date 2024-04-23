@@ -1,5 +1,5 @@
 async function createDisciplina() {
-    const apiUrl = "http://127.0.0.1:8000/api/disciplinas";
+    const apiUrl = "http://127.0.0.1:80/api/disciplinas";
 
     let nome = document.querySelector("#nome").value;
     let tipo = document.querySelector("#tipo").value;

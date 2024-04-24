@@ -45,7 +45,7 @@ async function createDisciplina() {
 
 async function getDisciplinas() {
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/disciplinas");
+        const response = await fetch("http://127.0.0.1:80/api/disciplinas");
 
         if (!response.ok) {
             throw new Error("Failed to fetch disciplinas");
@@ -166,7 +166,7 @@ document.addEventListener("click", function (event) {
 
 
 async function deleteDisciplina(disciplinaId) {
-    const apiUrl = `http://127.0.0.1:8000/api/disciplinas/${disciplinaId}`;
+    const apiUrl = `http://127.0.0.1:80/api/disciplinas/${disciplinaId}`;
 
     try {
         const response = await fetch(apiUrl, {
@@ -201,7 +201,7 @@ async function deleteDisciplina(disciplinaId) {
 
 async function getDisciplinaById(disciplinaId) {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/api/disciplinas/${disciplinaId}`);
+        const response = await fetch(`http://127.0.0.1:80/api/disciplinas/${disciplinaId}`);
 
         if (!response.ok) {
             throw new Error("Failed to fetch disciplina by id");
@@ -237,7 +237,7 @@ async function populateInputsForEdit(disciplinaId) {
 }
 
 async function updateDisciplina(disciplinaId) {
-    const apiUrl = `http://127.0.0.1:8000/api/disciplinas/${disciplinaId}`;
+    const apiUrl = `http://127.0.0.1:80/api/disciplinas/${disciplinaId}`;
 
     let nome = document.querySelector("#nome").value;
     let tipo = document.querySelector("#tipo").value;

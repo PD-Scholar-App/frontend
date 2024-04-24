@@ -51,7 +51,7 @@ async function createCurso() {
 
 async function getCursos() {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/cursos");
+    const response = await fetch("http://127.0.0.1:80/api/cursos");
 
     if (!response.ok) {
       throw new Error("Failed to fetch cursos");
@@ -97,7 +97,7 @@ async function populateTableCursos() {
 document.addEventListener("DOMContentLoaded", populateTableCursos);
 
 function populateSelect() {
-  fetch("http://127.0.0.1:8000/api/disciplinas")
+  fetch("http://127.0.0.1:80/api/disciplinas")
     .then((response) => response.json())
     .then((data) => {
       const selectElement = document.getElementById("disciplinasSelect");
@@ -116,7 +116,7 @@ function populateSelect() {
 }
 
 async function deleteCurso(cursoId) {
-  const apiUrl = `http://127.0.0.1:8000/api/cursos/${cursoId}`;
+  const apiUrl = `http://127.0.0.1:80/api/cursos/${cursoId}`;
 
   try {
     const response = await fetch(apiUrl, {
@@ -263,7 +263,7 @@ document.addEventListener("click", function (event) {
 
 async function getCursoById(cursoId) {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/cursos/${cursoId}`);
+    const response = await fetch(`http://127.0.0.1:80/api/cursos/${cursoId}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch disciplina by id");
@@ -301,7 +301,7 @@ async function populateInputsForEdit(cursoId) {
 }
 
 async function updateCurso(cursoId) {
-  const apiUrl = `http://127.0.0.1:8000/api/cursos/${cursoId}`;
+  const apiUrl = `http://127.0.0.1:80/api/cursos/${cursoId}`;
 
   let nome = document.querySelector("#nome").value;
   let anos = Number(document.querySelector("#anos").value);

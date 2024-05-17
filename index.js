@@ -20,6 +20,10 @@ async function populateTableGeral() {
 
   if (!cursos) {
     console.log("No cursos data available");
+    const row = document.createElement("tr");
+    row.innerHTML = `Sem resultados`;
+    tableBody.appendChild(row);
+
     return;
   }
 

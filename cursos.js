@@ -33,6 +33,7 @@ async function createCurso() {
         title: "Criada",
         text: "Curso criado com sucesso",
       });
+      $("#adicionarCurso").modal("hide");
     } else {
       Swal.fire({
         icon: "error",
@@ -73,6 +74,10 @@ async function populateTableCursos() {
 
   if (!cursos) {
     console.log("No cursos data available");
+    const row = document.createElement("tr");
+    row.innerHTML = `Sem resultados`;
+    tableBody.appendChild(row);
+
     return;
   }
 
@@ -85,7 +90,7 @@ async function populateTableCursos() {
         <td>${curso.coordenador}</td>
         <td>${curso.tipo}</td>
         <td>
-            <button class="w-100 mb-2 btn btn-warning btn-sm edit-curso" data-curso="${curso.id}">Editar</button>
+            <button class="w-100 mb-2 btn btn-warning  btn-sm edit-curso" data-bs-toggle="modal" data-bs-target="#adicionarCurso" data-curso="${curso.id}">Editar</button>
             <button class="w-100 mb-2 btn btn-danger btn-sm delete" data-curso="${curso.id}">Apagar</button>
         </td>
       `;
@@ -130,8 +135,8 @@ async function deleteCurso(cursoId) {
       populateTableCursos();
       Swal.fire({
         icon: "success",
-        title: "Deletada",
-        text: "Curso apagada com sucesso",
+        title: "Eliminado",
+        text: "Curso eliminado com sucesso",
       });
     } else {
       Swal.fire({
@@ -149,10 +154,8 @@ async function deleteCurso(cursoId) {
   }
 }
 
-
 document.addEventListener("click", function (event) {
-
-  if (event.target.classList.contains('create')) {
+  if (event.target.classList.contains("create")) {
     event.preventDefault();
 
     let nome = document.querySelector("#nome").value;
@@ -160,14 +163,14 @@ document.addEventListener("click", function (event) {
     let coordenador = document.querySelector("#coordenador").value;
     let tipo = document.querySelector("#tipo").value;
     let disciplinas = $("#disciplinasSelect")
-        .select2("data")
-        .map((disciplina) => disciplina.id);
+      .select2("data")
+      .map((disciplina) => disciplina.id);
     if (
-        nome == "" ||
-        anos == "" ||
-        coordenador == "" ||
-        tipo == "" ||
-        disciplinas == []
+      nome == "" ||
+      anos == "" ||
+      coordenador == "" ||
+      tipo == "" ||
+      disciplinas == []
     ) {
       Swal.fire({
         icon: "error",
@@ -182,11 +185,11 @@ document.addEventListener("click", function (event) {
       const isDisciplinasValid = typeof disciplinas === "object";
 
       if (
-          !isNomeValid ||
-          !isAnosValid ||
-          !isCoordenadorValid ||
-          !isTipoValid ||
-          !isDisciplinasValid
+        !isNomeValid ||
+        !isAnosValid ||
+        !isCoordenadorValid ||
+        !isTipoValid ||
+        !isDisciplinasValid
       ) {
         Swal.fire({
           icon: "error",
@@ -199,7 +202,7 @@ document.addEventListener("click", function (event) {
     }
   }
 
-  if (event.target.classList.contains('edit')) {
+  if (event.target.classList.contains("edit")) {
     event.preventDefault();
 
     let nome = document.querySelector("#nome").value;
@@ -207,16 +210,16 @@ document.addEventListener("click", function (event) {
     let coordenador = document.querySelector("#coordenador").value;
     let tipo = document.querySelector("#tipo").value;
     let disciplinas = $("#disciplinasSelect")
-        .select2("data")
-        .map((disciplina) => disciplina.id);
+      .select2("data")
+      .map((disciplina) => disciplina.id);
 
     if (
-        nome == "" ||
-        anos == "" ||
-        coordenador == "" ||
-        tipo == "" ||
-        disciplinas == []
-    )  {
+      nome == "" ||
+      anos == "" ||
+      coordenador == "" ||
+      tipo == "" ||
+      disciplinas == []
+    ) {
       Swal.fire({
         icon: "error",
         title: "Erro no Formulário",
@@ -229,13 +232,12 @@ document.addEventListener("click", function (event) {
       const isTipoValid = typeof tipo === "string";
       const isDisciplinasValid = typeof disciplinas === "object";
 
-
       if (
-          !isNomeValid ||
-          !isAnosValid ||
-          !isCoordenadorValid ||
-          !isTipoValid ||
-          !isDisciplinasValid
+        !isNomeValid ||
+        !isAnosValid ||
+        !isCoordenadorValid ||
+        !isTipoValid ||
+        !isDisciplinasValid
       ) {
         Swal.fire({
           icon: "error",
@@ -243,23 +245,22 @@ document.addEventListener("click", function (event) {
           text: "Preencha os campos corretamente",
         });
       } else {
-        const cursoId = event.target.getAttribute('data-curso');
+        const cursoId = event.target.getAttribute("data-curso");
         updateCurso(cursoId);
       }
     }
   }
 
-  if (event.target.classList.contains('delete')) {
-    const cursoId = event.target.getAttribute('data-curso');
+  if (event.target.classList.contains("delete")) {
+    const cursoId = event.target.getAttribute("data-curso");
     deleteCurso(cursoId);
   }
 
-  if (event.target.classList.contains('edit-curso')) {
-    const cursoId = event.target.getAttribute('data-curso');
+  if (event.target.classList.contains("edit-curso")) {
+    const cursoId = event.target.getAttribute("data-curso");
     populateInputsForEdit(cursoId);
   }
 });
-
 
 async function getCursoById(cursoId) {
   try {
@@ -288,16 +289,16 @@ async function populateInputsForEdit(cursoId) {
   document.querySelector("#anos").value = curso.anos;
   document.querySelector("#coordenador").value = curso.coordenador;
   document.querySelector("#tipo").value = curso.tipo;
-  document.querySelector("#disciplinasSelect").value = ['10'];
+  document.querySelector("#disciplinasSelect").value = ["10"];
 
   // Add data-curso attribute to the submit button
-  const submitButton = document.querySelector(".submit");
-  submitButton.setAttribute('data-curso', cursoId);
-
+  const submitButton = document.querySelector('input[type="submit"]');
+  submitButton.setAttribute("data-curso", cursoId);
+  console.log(submitButton);
   // Change button text and add class for edit mode
-  submitButton.value = 'Guardar';
-  submitButton.classList.add('edit');
-  submitButton.classList.remove('create');
+  submitButton.value = "Guardar";
+  submitButton.classList.add("edit");
+  submitButton.classList.remove("create");
 }
 
 async function updateCurso(cursoId) {
@@ -308,9 +309,9 @@ async function updateCurso(cursoId) {
   let coordenador = document.querySelector("#coordenador").value;
   let tipo = document.querySelector("#tipo").value;
   let disciplinas = $("#disciplinasSelect")
-      .select2("data")
-      .map((disciplina) => disciplina.id);
-console.log(nome, anos, coordenador, disciplinas);
+    .select2("data")
+    .map((disciplina) => disciplina.id);
+  console.log(nome, anos, coordenador, disciplinas);
   try {
     const response = await fetch(apiUrl, {
       method: "PUT",
@@ -326,13 +327,16 @@ console.log(nome, anos, coordenador, disciplinas);
       }),
     });
 
-    console.log(response, JSON.stringify({
-      nome: nome,
-      anos: anos,
-      coordenador: coordenador,
-      tipo: tipo,
-      disciplina: disciplinas,
-    }));
+    console.log(
+      response,
+      JSON.stringify({
+        nome: nome,
+        anos: anos,
+        coordenador: coordenador,
+        tipo: tipo,
+        disciplina: disciplinas,
+      })
+    );
 
     if (response.ok) {
       populateTableCursos(); // Assuming this function reloads the table data
@@ -341,6 +345,7 @@ console.log(nome, anos, coordenador, disciplinas);
         title: "Atualizada",
         text: "Curso atualizado com sucesso",
       });
+      $("#adicionarCurso").modal("hide");
     } else {
       Swal.fire({
         icon: "error",
